@@ -1,6 +1,6 @@
-.set MAGIC, 0x1badb002 //Magic number for the boot loader identify that program a operational system. Basicly to configure all the proccess by the bootloader
-.set FLAGS, (1<<0 | 1<<1) //this(<<) is a bit shift to the left! And the "|" operator is a bitwise OR, to use OR in all bits and concat the bits.
-.set CHECKSUM, -(MAGIC + FLAGS) //Used to verify the Multiboot header, if its a valid Multiboot header
+.set MAGIC, 0x1badb002 ##Magic number for the boot loader identify that program a operational system. Basicly to configure all the proccess by the bootloader
+.set FLAGS, (1<<0 | 1<<1) ##This(<<) is a bit shift to the left! And the "|" operator is a bitwise OR, to use OR in all bits and concat the bits.
+.set CHECKSUM, -(MAGIC + FLAGS) ##Used to verify the Multiboot header, if its a valid Multiboot header
 
 .section .multiboot
     .long MAGIC
@@ -20,7 +20,7 @@ loader:
 _stop:
     cli
     hlt
-    jpm _stop
+    jmp _stop
 
 .section .bss
 .space 2*1024*1024;
