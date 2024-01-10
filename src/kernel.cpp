@@ -34,7 +34,8 @@ void printf(int8_t* str){
 }
 
 extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnumber) {
-    printf("El Psy Kongroo!");
+    printf("El Psy Kongroo!\n");
+    printf("This is the choice of the Steins;Gate!");
 
     GlobalDescriptorTable gdt;
 
