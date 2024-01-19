@@ -4,14 +4,18 @@
 
 .extern _ZN16InterruptManager15handleInterruptEhj
 
+.global _ZN16InterruptManager22ignoreInterruptRequestEv
+
 .macro HandleException num
 .global _ZN16InterruptManager16handleException\num\()Ev
+_ZN16InterruptManager16handleException\num\()Ev:
     movb $\num, (interruptnumber)
     jmb int_bottom
 .endm
 
 .macro HandleInterruptRequest num
 .global _ZN16InterruptManager26handleInterruptRequest\num\()Ev
+_ZN16InterruptManager26handleInterruptRequest\num\()Ev:
     movb $\num + IRQ_BASE, (interruptnumber)
     jmb int_bottom
 .endm
@@ -20,6 +24,7 @@
 HandleInterruptRequest 0x00
 /*Example of the macro
 .global _ZN16InterruptManager26handleInterruptRequest0x00\()Ev
+_ZN16InterruptManager26handleInterruptRequest0x00\()Ev:
     movb $0x00(immediate value) + IRQ_BASE, (interruptnumber)
     jmb int_bottom
  */
@@ -45,6 +50,8 @@ int_bottom:
     popl %es
     popl %ds
     popa
+
+_ZN16InterruptManager22ignoreInterruptRequestEv:
 
     iret //iret -> a special return for interrupt case, poping more values from stack that was saved there when the cpu gived the control to the interrupt handler. After the pops, return to the stopped process before the interrupt
 

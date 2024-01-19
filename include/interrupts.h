@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "gdt.h"
+#include "port.h"
 
     class InterruptManager{
         protected:
@@ -13,10 +14,14 @@
                 uint8_t reserved;
                 uint8_t access;
                 uint16_t handlerAddressHighBits;
-
             } __attribute__((packed));
 
             static GateDescriptor interruptDescriptorTable[256];
+
+            struct interruptDescriptorTablePointer {
+                uint16_t size;
+                uint32_t base;
+            } __attribute__((packed));
 
             static void SetInterruptDescriptorTableEntry(
                 uint8_t interruptNumber,
@@ -26,13 +31,20 @@
                 uint8_t DescriptorType
             );
 
+            Port8BitSlow picMasterCommand;
+            Port8BitSlow picMasterData;
+            Port8BitSlow picSlaveCommand;
+            Port8BitSlow picSlaveData;
+
         public:
             InterruptManager(GlobalDescriptorTable* gdt);
             ~InterruptManager();
 
+            void Activate();
+
             static uint32_t handleInterrupt(uint8_t interruptNumber, uint32_t esp);
 
-            static void IgnoreInterruptRequest();
+            static void ignoreInterruptRequest();
             static void handleInterruptRequest0x00(); //Timer interrupt?
             static void handleInterruptRequest0x01();
     };

@@ -1,5 +1,6 @@
 #include "../include/types.h"
 #include "../include/gdt.h"
+#include "../include/interrupts.h"
 
 void printf(int8_t* str){
     static uint16_t* VideoMemory = (uint16_t*) 0xb8000;
@@ -35,9 +36,15 @@ void printf(int8_t* str){
 
 extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnumber) {
     printf("El Psy Kongroo!\n");
-    printf("This is the choice of the Steins;Gate!");
+    printf("This is the choice of the Steins;Gate!\n\n");
+    printf("... i am begin gluttony? Maybe that cannot be assigned 'gluttony', i am not learning to much... no, this is a lie, i am understanding much things, but maybe yes, i am being too gluttony... I just wont loose them");
 
     GlobalDescriptorTable gdt;
+    InterruptManager interrupts(&gdt);
+
+
+
+    interrupts.Activate();
 
     while(1);
 }
