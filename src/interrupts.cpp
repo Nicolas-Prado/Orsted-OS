@@ -2,6 +2,8 @@
 
 void printf(char* str);
 
+InterruptManager::GateDescriptor InterruptManager::interruptDescriptorTable[256];
+
 void InterruptManager::SetInterruptDescriptorTableEntry(
     uint8_t interruptNumber,
     uint16_t codeSegmentSelectorOffset,
@@ -9,7 +11,7 @@ void InterruptManager::SetInterruptDescriptorTableEntry(
     uint8_t DescriptorPrivilegeLevel,
     uint8_t DescriptorType
 ) {
-    const IDT_DESC_PRESENT = 0x80;
+    const uint8_t IDT_DESC_PRESENT = 0x80;
 
     interruptDescriptorTable[interruptNumber].handlerAddressLowBits = ((uint32_t)handler) & 0xFFFF;
     interruptDescriptorTable[interruptNumber].handlerAddressHighBits = (((uint32_t)handler) >> 16) & 0xFFFF;
@@ -23,7 +25,7 @@ InterruptManager::InterruptManager(GlobalDescriptorTable* gdt)
   picMasterData(0x21),
   picSlaveCommand(0xA0),
   picSlaveData(0xA1) {
-    uint16_t codeSegment = gdt->CodeSegmentSelector()
+    uint16_t codeSegment = gdt->CodeSegmentSelector();
     const uint8_t IDT_INTERRUPT_GATE = 0xE;
 
     for(int16_t i = 0; i<256; i++) 
@@ -51,7 +53,7 @@ InterruptManager::InterruptManager(GlobalDescriptorTable* gdt)
     idt.size = 256 * sizeof(GateDescriptor) - 1;
     idt.base = (uint32_t)interruptDescriptorTable;
 
-    asm volatile("lidt %0" : : "n" (idt));
+    asm volatile("lidt %0" : : "m" (idt));
 }
 
 InterruptManager::~InterruptManager() {
@@ -64,9 +66,7 @@ void InterruptManager::Activate() {
 
 uint32_t InterruptManager::handleInterrupt(uint8_t interruptNumber, uint32_t esp){
 
-    printf(" INTERRUPT")
+    printf(" INTERRUPT");
 
     return esp;
 }
-
-handleInterruptc

@@ -5,11 +5,11 @@ GlobalDescriptorTable::GlobalDescriptorTable()
 unusedSegmentSelector(0, 0, 0),
 codeSegmentSelector(0,64*1024*1024, 0x9A),
 dataSegmentSelector(0,64*1024*1024, 0x92) {
-    uint32_t i [2];
-    i[0] = (uint32_t) this;
-    i[1] = sizeof(GlobalDescriptorTable) << 16;
+    uint32_t i[2];
+	i[0] = sizeof(GlobalDescriptorTable) << 16; // BRO! THAT IS A BURNAHOLE! I MEAN... That is the right version... i thing, for some reason the guide is was following define base address before the size, and that not make sense! Size should come first https://en.wikibooks.org/wiki/X86_Assembly/Global_Descriptor_Table
+	i[1] = (uint32_t)this;
 
-    asm volatile("lgdt (%0)": :"p" (((uint8_t *) i)+2));
+    asm volatile("lgdt (%0)": :"p" (((uint8_t *) i)+2)); // +2 jumping the empty 0 made by << 16 shift. REMEMBER!Endian Little Order!!! So the first bytes are the least important, so the 0000 0000 are there!
 }
 
 GlobalDescriptorTable::~GlobalDescriptorTable()
