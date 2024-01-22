@@ -1,4 +1,4 @@
-.set IRQ_BASE, 0x20 # Exception take the first 32 interrupt index... i think is it
+.set IRQ_BASE, 0x20 # Exception take the first 32 interrupt index, so if i send interrupt 0x00 i mean the 0x20, because the offset of the exceptions
 
 .section .text
 

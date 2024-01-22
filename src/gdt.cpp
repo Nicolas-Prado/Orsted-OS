@@ -28,15 +28,16 @@ GlobalDescriptorTable::SegmentDescriptor::SegmentDescriptor(uint32_t base, uint3
     uint8_t* target = (uint8_t*)this;
 
     if(limit <= 65536){
-        target[6] = 0x40;
+        target[6] = 0x40; //16-bit mode
     }
     else {
+        // That limit address needs to be compatible to 8086 first x86 processor, that have just 20 bits bus address. To do that, we cut the 12 last bits and replace by 12 positive bit(1). But, if we do that, we need to decrement the value to not increase the limit, that would cause problems, so it is decressed
         if((limit & 0xFFF) != 0xFFF)
             limit = (limit >> 12)-1;
         else
             limit = limit >> 12;
         
-        target[6] = 0xC0;
+        target[6] = 0xC0; //32-bit mode
     }
 
     target[0] = limit & 0xFF;
