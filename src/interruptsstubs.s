@@ -1,34 +1,36 @@
-.set IRQ_BASE, 0x20 //Exception take the first 32 interrupt index... i think is it
+.set IRQ_BASE, 0x20 //Exception take the first 32 interrupt index, so if i send interrupt 0x00 i mean the 0x20, because the offset of the exceptions
 
 .section .text
 
 .extern _ZN16InterruptManager15handleInterruptEhj
 
-.global _ZN16InterruptManager22ignoreInterruptRequestEv
+/*Handlers*/
+    .global _ZN16InterruptManager22ignoreInterruptRequestEv
 
-.macro HandleException num
-.global _ZN16InterruptManager16handleException\num\()Ev
-_ZN16InterruptManager16handleException\num\()Ev:
-    movb $\num, (interruptnumber)
-    jmb int_bottom
-.endm
+    .macro HandleException num
+    .global _ZN16InterruptManager16handleException\num\()Ev
+    _ZN16InterruptManager16handleException\num\()Ev:
+        movb $\num, (interruptnumber)
+        jmb int_bottom
+    .endm
 
-.macro HandleInterruptRequest num
-.global _ZN16InterruptManager26handleInterruptRequest\num\()Ev
-_ZN16InterruptManager26handleInterruptRequest\num\()Ev:
-    movb $\num + IRQ_BASE, (interruptnumber)
-    jmb int_bottom
-.endm
-
+    .macro HandleInterruptRequest num
+    .global _ZN16InterruptManager26handleInterruptRequest\num\()Ev
+    _ZN16InterruptManager26handleInterruptRequest\num\()Ev:
+        movb $\num + IRQ_BASE, (interruptnumber)
+        jmb int_bottom
+    .endm
+/**/
 
 HandleInterruptRequest 0x00
+HandleInterruptRequest 0x01
+
 /*Example of the macro
 .global _ZN16InterruptManager26handleInterruptRequest0x00\()Ev
 _ZN16InterruptManager26handleInterruptRequest0x00\()Ev:
     movb $0x00(immediate value) + IRQ_BASE, (interruptnumber)
     jmb int_bottom
  */
-HandleInterruptRequest 0x01
 
 
 int_bottom:
