@@ -4,6 +4,7 @@
 
 .extern _ZN16InterruptManager15handleInterruptEhj
 
+/*Handlers*/
 .global _ZN16InterruptManager22ignoreInterruptRequestEv
 
 .macro HandleException num
@@ -22,13 +23,14 @@ _ZN16InterruptManager26handleInterruptRequest\num\()Ev:
 
 
 HandleInterruptRequest 0x00
+HandleInterruptRequest 0x01
+
 /*Example of the macro
 .global _ZN16InterruptManager26handleInterruptRequest0x00\()Ev
 _ZN16InterruptManager26handleInterruptRequest0x00\()Ev:
     movb $0x00(immediate value) + IRQ_BASE, (interruptnumber)
     jmb int_bottom
  */
-HandleInterruptRequest 0x01
 
 
 int_bottom:
