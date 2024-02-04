@@ -34,18 +34,23 @@ InterruptManager::InterruptManager(GlobalDescriptorTable* gdt)
     SetInterruptDescriptorTableEntry(0x20, codeSegment, &InterruptManager::handleInterruptRequest0x00, 0, IDT_INTERRUPT_GATE);
     SetInterruptDescriptorTableEntry(0x21, codeSegment, &InterruptManager::handleInterruptRequest0x01, 0, IDT_INTERRUPT_GATE);
 
-    picMasterCommand.Write(0x11);
+    //ICW1
+    picMasterCommand.Write(0x11); 
     picSlaveCommand.Write(0x11);
 
+    //ICW2
     picMasterData.Write(0x20);
     picSlaveData.Write(0x28);
 
+    //ICW3
     picMasterData.Write(0x04);
     picSlaveData.Write(0x02);
 
+    //ICW4
     picMasterData.Write(0x01);
     picSlaveData.Write(0x01);
 
+    //Clear data registers, finish the preparing to receive interrupts
     picMasterData.Write(0x00);
     picSlaveData.Write(0x00);
 
