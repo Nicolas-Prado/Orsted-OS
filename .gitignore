@@ -1,2 +1,13 @@
 bin
 build
+
+docs/*
+!docs/TheArchiver
+
+!docs/brokenhorn
+docs/brokenhorn/*
+!docs/brokenhorn/index.html
+!docs/brokenhorn/styles.css
+!docs/brokenhorn/images/
+
+__pycache__
