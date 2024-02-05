@@ -1,3 +1,4 @@
+#include "../include/keyboard.h"
 #include "../include/types.h"
 #include "../include/gdt.h"
 #include "../include/interrupts.h"
@@ -42,7 +43,7 @@ extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnumber) {
     GlobalDescriptorTable gdt;
     InterruptManager interrupts(&gdt);
 
-
+    KeyboardDriver keyboard(&interrupts);
 
     interrupts.Activate();
 
