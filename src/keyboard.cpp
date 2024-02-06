@@ -1,3 +1,4 @@
+#include "../include/utils.h"
 #include "../include/keyboard.h"
 
 KeyboardDriver::KeyboardDriver(InterruptManager* manager)
@@ -20,12 +21,10 @@ KeyboardDriver::~KeyboardDriver(){
 
 }
 
-void printf(char*);
-
 uint32_t KeyboardDriver::handleInterrupt(uint32_t esp){
     uint8_t key = dataPort.Read();
 
-    if(key < 0x80){
+    if(key < 0x80){ //Ignoring stop clicking key interrupt
         char* foo = "EPK: KEYBOARD 0x00";
         char* hex = "0123456789ABCDEF";
 
