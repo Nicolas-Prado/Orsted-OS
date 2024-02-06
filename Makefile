@@ -3,7 +3,7 @@ GPPPARAMS = -m32 -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-excep
 ASPARAMS = --32
 LDPARAMS = -melf_i386
 
-objects = build/loader.o build/gdt.o build/port.o build/interruptsstubs.o build/interrupts.o build/keyboard.o build/kernel.o
+objects = $(patsubst src/%.cpp,build/%.o,$(wildcard src/*.cpp)) $(patsubst src/%.s,build/%.o,$(wildcard src/*.s))
 
 build/%.o: src/%.cpp
 	g++ $(GPPPARAMS) -o $@ -c $<
