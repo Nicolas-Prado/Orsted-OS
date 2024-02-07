@@ -8,6 +8,7 @@
 
 //Drivers
 #include "../include/keyboard.h"
+#include "../include/mouse.h"
 
 extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnumber) {
     printf("Welcome to Orsted OS\n");
@@ -18,6 +19,7 @@ extern "C" void kernelMain(void* multiboot_structure, uint32_t magicnumber) {
     InterruptManager interrupts(&gdt);
 
     KeyboardDriver keyboard(&interrupts);
+    MouseDriver mouse(&interrupts);
 
     interrupts.Activate();
 

@@ -22,8 +22,9 @@ _ZN16InterruptManager26handleInterruptRequest\num\()Ev:
 .endm
 
 
-HandleInterruptRequest 0x00
-HandleInterruptRequest 0x01
+HandleInterruptRequest 0x00 # Timer ???
+HandleInterruptRequest 0x01 # Keyboard
+HandleInterruptRequest 0x0C # Mouse
 
 /*Example of the macro
 .global _ZN16InterruptManager26handleInterruptRequest0x00\()Ev

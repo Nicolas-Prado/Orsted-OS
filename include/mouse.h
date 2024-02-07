@@ -17,6 +17,6 @@ class MouseDriver : public InterruptHandler {
         MouseDriver(InterruptManager* manager);
         ~MouseDriver();
         virtual uint32_t handleInterrupt(uint32_t esp);
-}
+};
 
 #endif

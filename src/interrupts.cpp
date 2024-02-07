@@ -53,6 +53,7 @@ InterruptManager::InterruptManager(GlobalDescriptorTable* gdt)
 
     SetInterruptDescriptorTableEntry(0x20, codeSegment, &InterruptManager::handleInterruptRequest0x00, 0, IDT_INTERRUPT_GATE);
     SetInterruptDescriptorTableEntry(0x21, codeSegment, &InterruptManager::handleInterruptRequest0x01, 0, IDT_INTERRUPT_GATE);
+    SetInterruptDescriptorTableEntry(0x2C, codeSegment, &InterruptManager::handleInterruptRequest0x0C, 0, IDT_INTERRUPT_GATE);
 
     //ICW1
     picMasterCommand.Write(0x11); 

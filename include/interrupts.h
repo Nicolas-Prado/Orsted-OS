@@ -66,7 +66,8 @@
 
             static void ignoreInterruptRequest();
             static void handleInterruptRequest0x00(); //Timer interrupt?
-            static void handleInterruptRequest0x01();
+            static void handleInterruptRequest0x01(); //Keyboard
+            static void handleInterruptRequest0x0C(); //Mouse
     };
 
 #endif
