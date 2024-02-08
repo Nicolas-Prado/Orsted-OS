@@ -5,6 +5,14 @@ MouseDriver::MouseDriver(InterruptManager* manager)
 : InterruptHandler(0x2C, manager),
   dataport(0x60),
   commandport(0x64) {
+    
+}
+
+MouseDriver::~MouseDriver(){
+
+}
+
+void MouseDriver::Activate(){
     offset = 0;
     buttons = 0;
 
@@ -23,10 +31,6 @@ MouseDriver::MouseDriver(InterruptManager* manager)
     commandport.Write(0xD4);
     dataport.Write(0xF4);
     dataport.Read();
-}
-
-MouseDriver::~MouseDriver(){
-
 }
 
 uint32_t MouseDriver::handleInterrupt(uint32_t esp) {

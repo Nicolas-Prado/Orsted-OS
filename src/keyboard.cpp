@@ -5,6 +5,14 @@ KeyboardDriver::KeyboardDriver(InterruptManager* manager)
 : InterruptHandler(0x21, manager),
   dataPort(0x60),
   commandPort(0x64) {
+    
+}
+
+KeyboardDriver::~KeyboardDriver(){
+
+}
+
+void KeyboardDriver::Activate() {
     while (commandPort.Read() & 0x1)
         dataPort.Read();
     
@@ -15,10 +23,6 @@ KeyboardDriver::KeyboardDriver(InterruptManager* manager)
     dataPort.Write(status);
 
     dataPort.Write(0xF4);
-}
-
-KeyboardDriver::~KeyboardDriver(){
-
 }
 
 uint32_t KeyboardDriver::handleInterrupt(uint32_t esp){
