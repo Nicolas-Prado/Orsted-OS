@@ -4,16 +4,14 @@
 #include "types.h"
 #include "interrupts.h"
 #include "port.h"
-#include "driver.h"
 
-    class KeyboardDriver : public InterruptHandler, public Driver {
+    class KeyboardDriver : public InterruptHandler{
         Port8Bit dataPort;
         Port8Bit commandPort;
         public:
             KeyboardDriver(InterruptManager* manager);
             ~KeyboardDriver();
-            virtual uint32_t handleInterrupt(uint32_t esp);
-            virtual void Activate();
+            uint32_t handleInterrupt(uint32_t esp);
     };
 
 #endif
